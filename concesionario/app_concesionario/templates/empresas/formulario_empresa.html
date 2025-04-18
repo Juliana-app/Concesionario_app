@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 600px; margin: auto; padding: 2rem; border: 1px solid #ccc; border-radius: 8px;">
+    <h2 style="text-align: center;">Crear Empresa</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-crear">Crear Empresa</button>
+    </form>
+</div>
+{% endblock %}

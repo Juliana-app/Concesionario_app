@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="padding: 1rem;">
+    <div style="display: flex; padding: 2rem;">
+        <img src="{% static 'img/'|add:empresa.nombre|add:'.png' %}" alt="{{ empresa.nombre }}" style="width: 300px; border-radius: 12px; margin-right: 2rem;">
+        <div>
+            <p><strong>Nombre:</strong> {{ empresa.nombre }}</p>
+            <p><strong>Dirección:</strong> {{ empresa.direccion }}</p>
+            <p><strong>Teléfono:</strong> {{ empresa.telefono }}</p>
+            <p><strong>Email:</strong> {{ empresa.email }}</p>
+
+            <button class="btn btn-warning" onclick="abrirModal()">Actualizar</button>
+            <form method="post" action="{% url 'eliminar_empresa' empresa.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+            <a href="{% url 'listar_empresas' %}" class="btn btn-primary">Ver todos</a>
+        </div>
+    </div>
+
+    <!-- Modal de actualización -->
+    <div id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999;">
+        <div style="background:white; padding:2rem; margin:5% auto; width:50%; border-radius:8px;">
+            <h4>Actualizar Empresa</h4>
+            <form method="post" action="{% url 'actualizar_empresa' empresa.id %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function abrirModal() {
+            document.getElementById("modal").style.display = "block";
+        }
+
+        function cerrarModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+    </script>
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <p>Estimado cliente, actualmente usted ha registrado estas empresas:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Empresa</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for empresa in empresas %}
+            <tr class="{% cycle 'white-row' 'red-row' %}">
+                <td>{{ empresa.id }}</td>
+                <td>{{ empresa.nombre }}</td>
+                <td>{{ empresa.direccion }}</td>
+                <td>{{ empresa.telefono }}</td>
+                <td>{{ empresa.email }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">No hay empresas registradas.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    body {
+        font-family: Arial;
+        background: #f8f8f8;
+        margin: 0;
+    }
+    .header {
+        background-color: #8B0000;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .header a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .container {
+        padding: 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+    th {
+        background-color: #8B0000;
+        color: white;
+        padding: 10px;
+    }
+    td {
+        padding: 10px;
+    }
+    td, th {
+        border: 1px solid #8B0000;
+    }
+
+    .white-row {
+        background-color: #ffffff;
+    }
+
+    .red-row {
+        background-color: #f28c8c;
+    }
+</style>
+{% endblock %}

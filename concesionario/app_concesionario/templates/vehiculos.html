@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Slider con overlay oscuro -->
+<section class="slider" style="position: relative; overflow: hidden;">
+    <div class="slides" style="display: flex; animation: slide 20s infinite;">
+        {% for vehiculo in vehiculos %}
+            <img src="{% static 'img/'|add:vehiculo.nombre|add:'-'|add:vehiculo.modelo|add:'.png' %}" alt="{{ vehiculo.nombre }}" style="width: 100%; height: 400px; object-fit: cover;">
+        {% endfor %}
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4);"></div>
+</section>
+
+<section class="intro" style="text-align: center; padding: 2rem;">
+    <p><strong>Sabemos que elegir un carro no es cualquier cosa...</strong></p>
+    <p>Por eso estamos aquí para ayudarte a tomar la mejor decisión, sin apuros, con confianza y a tu ritmo</p>
+</section>
+
+<!-- Botón para crear un vehículo -->
+<section class="crear-vehiculo" style="text-align: right; padding: 1rem 2rem;">
+    <a href="{% url 'crear_vehiculo' %}" class="btn-crear" >Crear vehiculo</a>
+</section>
+
+<section class="contenido" style="display: flex; flex-wrap: wrap;">
+    <!-- Filtros -->
+    <aside class="filtros" style="flex: 1 1 250px; padding: 1rem;">
+        <h3><i class="fas fa-filter"></i> Filtros</h3>
+        <form method="get">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre" placeholder="Nombre">
+
+            <label for="marca">Marca</label>
+            <input type="text" name="marca" id="marca" placeholder="Marca">
+
+            <label for="modelo">Modelo</label>
+            <input type="text" name="modelo" id="modelo" placeholder="Modelo">
+
+            <label for="color">Color</label>
+            <input type="text" name="color" id="color" placeholder="Color">
+
+            <label for="placa">Placa</label>
+            <input type="text" name="placa" id="placa" placeholder="Placa">
+
+            <label for="fecha_registro">Fecha de Registro</label>
+            <input type="date" name="fecha_registro" id="fecha_registro">
+
+            <label for="empresa">Empresa</label>
+            <select name="empresa" id="empresa">
+                <option value="">Seleccione una empresa</option>
+                {% for empresa in empresas %}
+                    <option value="{{ empresa.id }}">{{ empresa.nombre }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" style="margin-top: 10px;">Buscar</button>
+        </form>
+    </aside>
+
+    <!-- Tarjetas de vehículos -->
+    <div class="vehiculos-grid" style="flex: 3 1 700px;">
+        {% for vehiculo in vehiculos %}
+            <div class="vehiculo-card">
+                <img src="{% static 'img/'|add:vehiculo.nombre|add:'-'|add:vehiculo.modelo|add:'.png' %}" alt="{{ vehiculo.nombre }}">
+                <h4>{{ vehiculo.nombre }}</h4>
+                <p><strong>Marca:</strong> {{ vehiculo.marca }}</p>
+                <p><strong>Modelo:</strong> {{ vehiculo.modelo }}</p>
+                <p><strong>Color:</strong> {{ vehiculo.color }}</p>
+                <p><strong>Placa:</strong> {{ vehiculo.placa }}</p>
+                <p><strong>Fecha de registro:</strong> {{ vehiculo.fecha_registro }}</p>
+                <p><strong>Empresa:</strong> {{ vehiculo.id_empresa.nombre }}</p>
+                <a href="{% url 'vehiculo_menu' vehiculo.id %}" class="btn-detalle">Ver más detalle</a>
+            </div>
+        {% empty %}
+            <p>No hay vehículos disponibles.</p>
+        {% endfor %}
+    </div>
+</section>
+
+
+<style>
+    .crear-vehiculo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn-crear {
+    background-color: #28a745;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+    .btn-crear:hover {
+        background-color: #218838;
+    }
+
+    .vehiculos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+
+    .vehiculo-card {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: transform 0.2s ease;
+    }
+
+    .vehiculo-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+    }
+
+    .vehiculo-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .btn-detalle {
+        background-color: #880001;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        margin-top: 1rem;
+    }
+
+    .btn-detalle:hover {
+        background-color:rgb(131, 33, 33);
+    }
+
+    .contenido {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0 2rem 2rem;
+    }
+
+    .filtros {
+        flex: 1 1 250px;
+        background-color: #f9f9f9;
+        padding: 1rem;
+        margin-right: 1rem;
+        border-radius: 8px;
+    }
+
+    .filtros input,
+    .filtros select {
+        width: 100%;
+        margin-bottom: 0.8rem;
+        padding: 0.5rem;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .filtros button {
+        width: 100%;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 0.6rem;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .filtros button:hover {
+        background-color: #c82333;
+    }
+
+    /* Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+        border-radius: 8px;
+    }
+
+    .close-btn {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close-btn:hover,
+    .close-btn:focus {
+        color: black;
+        text-decoration: none;
+    }
+</style>
+
+
+<script>
+    // Abrir el modal
+    var modal = document.getElementById("crearVehiculoModal");
+    var btn = document.getElementById("crearVehiculoBtn");
+    var span = document.getElementsByClassName("close-btn")[0];
+
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+{% endblock %}

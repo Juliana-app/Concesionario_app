@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.exceptions import NotFound
-from app_concesionario.forms import VehiculoForm
+from app_concesionario.forms import VehiculoForm, EmpresaForm
 from app_concesionario.models import Empresa
 from app_concesionario.models import Vehiculo
 from app_concesionario.api.serializers import EmpresaSerializer
@@ -97,12 +97,21 @@ class VehiculoDetailAV(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 
-def empresa_menu(request):
-    return render(request, 'menubar/empresaMenu.html')
+def empresa_menu(request, id):
+    empresa = get_object_or_404(Empresa, pk=id)
+    form = EmpresaForm(instance=empresa)
+    return render(request, 'menubar/empresaMenu.html', {
+        'empresa': empresa,
+        'form': form
+    })
 
-def vehiculo_menu(request):
-    vehiculos = Vehiculo.objects.all()
-    return render(request, 'menubar/vehiculoMenu.html', {'vehiculos': vehiculos})
+def vehiculo_menu(request, id):
+    vehiculo = get_object_or_404(Vehiculo, pk=id)
+    form = VehiculoForm(instance=vehiculo)
+    return render(request, 'menubar/vehiculoMenu.html', {
+        'vehiculo': vehiculo,
+        'form': form
+    })
 
 # Vista para crear un vehículo
 def crear_vehiculo(request):
@@ -110,27 +119,61 @@ def crear_vehiculo(request):
         form = VehiculoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('vehiculo_menu')  # Redirige a la lista de vehículos
+            return redirect('vista-vehiculos')  # Redirige a la lista de vehículos
     else:
         form = VehiculoForm()
     return render(request, 'vehiculos/formulario_vehiculo.html', {'form': form})
 
-# Vista para actualizar un vehículo
 def actualizar_vehiculo(request, vehiculo_id):
     vehiculo = get_object_or_404(Vehiculo, pk=vehiculo_id)
     if request.method == 'POST':
         form = VehiculoForm(request.POST, instance=vehiculo)
         if form.is_valid():
             form.save()
-            return redirect('vehiculo_menu')
+            return redirect('vehiculo_menu', id=vehiculo.id)  
     else:
         form = VehiculoForm(instance=vehiculo)
-    return render(request, 'vehiculos/formulario_vehiculo.html', {'form': form})
+    return render(request, 'menubar/vehiculoMenu.html', {'vehiculo': vehiculo, 'form': form})
 
 # Vista para eliminar un vehículo
 def eliminar_vehiculo(request, vehiculo_id):
     vehiculo = get_object_or_404(Vehiculo, pk=vehiculo_id)
     if request.method == 'POST':
         vehiculo.delete()
-        return redirect('vehiculo_menu')
-    return render(request, 'vehiculos/confirmar_eliminacion.html', {'vehiculo': vehiculo})
+        return redirect('vista-vehiculos')  # Redirige a la lista de vehículos
+    return render(request, 'vehiculos.html', {'vehiculo': vehiculo})
+
+def listar_vehiculos(request):
+    vehiculos = Vehiculo.objects.all()
+    return render(request, 'vehiculos/listado.html', {'vehiculos': vehiculos})
+
+def listar_empresas(request):
+    empresas = Empresa.objects.all()
+    return render(request, 'empresas/listado.html', {'empresas': empresas})
+
+def actualizar_empresa(request, empresa_id):
+    empresa = get_object_or_404(Empresa, pk=empresa_id)
+    if request.method == 'POST':
+        form = EmpresaForm(request.POST, instance=empresa)
+        if form.is_valid():
+            form.save()
+            return redirect('empresa_menu', id=empresa.id) 
+    else:
+        form = EmpresaForm(instance=empresa)
+    return render(request, 'menubar/empresaMenu.html', {'empresa': empresa, 'form': form})
+
+def eliminar_empresa(request, empresa_id):
+    empresa = get_object_or_404(Empresa, pk=empresa_id)
+    if request.method == 'POST':
+        empresa.delete()
+    return render(request, 'empresas.html', {'empresa': empresa})
+
+def crear_empresa(request):
+    if request.method == 'POST':
+        form = EmpresaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('vista-empresas') 
+    else:
+        form = EmpresaForm()
+    return render(request, 'empresas/formulario_empresa.html', {'form': form})

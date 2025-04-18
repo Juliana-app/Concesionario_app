@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Slider con overlay oscuro -->
+<section class="slider" style="position: relative; overflow: hidden;">
+    <div class="slides" style="display: flex; animation: slide 20s infinite;">
+        {% for empresa in empresas %}
+            <img src="{% static 'img/'|add:empresa.nombre|add:'.png' %}" alt="{{ empresa.nombre }}" style="width: 100%; height: 400px; object-fit: cover;">
+        {% endfor %}
+    </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4);"></div>
+</section>
+
+<section class="intro" style="text-align: center; padding: 2rem;">
+    <p><strong>Las mejores marcas del mercado cada vez más cerca de ti, para que tomes la mejor decisión</strong></p>
+</section>
+
+<!-- Botón para crear un vehículo -->
+<section class="crear-empresa" style="text-align: center; padding: 1rem 2rem;">
+    <a href="{% url 'crear_empresa' %}" class="btn-crear" >Crear empresa</a>
+</section>
+
+<section class="contenido" style="display: flex; flex-wrap: wrap;">
+    <!-- Filtros -->
+    <aside class="filtros" style="flex: 1 1 250px; padding: 1rem;">
+        <h3><i class="fas fa-filter"></i> Filtros</h3>
+        <form method="get">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre" placeholder="Nombre">
+
+            <label for="marca">Marca</label>
+            <input type="text" name="marca" id="marca" placeholder="Marca">
+
+            <label for="modelo">Modelo</label>
+            <input type="text" name="modelo" id="modelo" placeholder="Modelo">
+
+            <label for="color">Color</label>
+            <input type="text" name="color" id="color" placeholder="Color">
+
+            <label for="placa">Placa</label>
+            <input type="text" name="placa" id="placa" placeholder="Placa">
+
+            <label for="fecha_registro">Fecha de Registro</label>
+            <input type="date" name="fecha_registro" id="fecha_registro">
+
+            <label for="empresa">Empresa</label>
+            <select name="empresa" id="empresa">
+                <option value="">Seleccione una empresa</option>
+                {% for empresa in empresas %}
+                    <option value="{{ empresa.id }}">{{ empresa.nombre }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" style="margin-top: 10px;">Buscar</button>
+        </form>
+    </aside>
+
+    <!-- Tarjetas de vehículos -->
+    <div class="vehiculos-grid" style="flex: 3 1 700px;">
+        {% for empresa in empresas %}
+            <div class="vehiculo-card">
+                <img src="{% static 'img/'|add:empresa.nombre|add:'.png' %}" alt="{{ empresa.nombre }}">
+                <h4>{{ empresa.nombre }}</h4>
+                <p><strong>Dirección:</strong> {{ empresa.direccion }}</p>
+                <p><strong>Teléfono:</strong> {{ empresa.telefono }}</p>
+                <p><strong>Email:</strong> {{ empresa.email }}</p>
+                <a href="{% url 'empresa_menu' empresa.id %}" class="btn-detalle">Ver más detalle</a>
+            </div>
+        {% empty %}
+            <p>No hay empresas disponibles.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<style>
+
+    .crear-vehiculo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn-crear {
+    background-color: #28a745;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+    .btn-crear:hover {
+        background-color: #218838;
+    }
+
+    .vehiculos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+
+    .vehiculo-card {
+        background: #ffffff;
+        padding: 1rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease-in-out;
+        text-align: center;
+    }
+
+    .vehiculo-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .vehiculo-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .btn-detalle {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 0.5rem 1rem;
+        background-color: #e60000;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .btn-detalle:hover {
+        background-color: #cc0000;
+    }
+
+    .filtros form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filtros label {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    .filtros input,
+    .filtros select {
+        padding: 6px;
+        margin-top: 4px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .filtros button {
+        padding: 0.5rem;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .filtros button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

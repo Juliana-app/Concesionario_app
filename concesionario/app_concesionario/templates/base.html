@@ -1,0 +1,29 @@
+<!-- templates/base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>TuConcesionario</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="logo" class="logo-img">
+            <span>TuConcesionario</span>
+        </div>
+        <div class="empresa-link">
+            <a href="{% url 'vista-empresas'%}">Detalles empresa</a>
+            <a href="{% url 'vista-vehiculos'%}" style="color: white;">Volver al inicio</a>
+            <i class="fas fa-user"></i>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
