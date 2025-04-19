@@ -12,14 +12,14 @@
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4);"></div>
 </section>
 
-<section class="intro" style="text-align: center; padding: 2rem;">
+<section class="intro" style="text-align: center; padding: 1rem;">
     <p><strong>Sabemos que elegir un carro no es cualquier cosa...</strong></p>
     <p>Por eso estamos aquí para ayudarte a tomar la mejor decisión, sin apuros, con confianza y a tu ritmo</p>
 </section>
 
 <!-- Botón para crear un vehículo -->
-<section class="crear-vehiculo" style="text-align: right; padding: 1rem 2rem;">
-    <a href="{% url 'crear_vehiculo' %}" class="btn-crear" >Crear vehiculo</a>
+<section class="crear-vehiculo" style="text-align: right; padding: 0.1em 2rem;">
+    <a href="{% url 'crear_vehiculo' %}" class="btn-crear" style="text-decoration: none;">Crear vehículo</a>
 </section>
 
 <section class="contenido" style="display: flex; flex-wrap: wrap;">
@@ -86,7 +86,7 @@
     }
 
     .btn-crear {
-    background-color: #28a745;
+    background-color: #880001;
     color: white;
     padding: 0.7rem 1.5rem;
     border: none;
@@ -96,7 +96,7 @@
 }
 
     .btn-crear:hover {
-        background-color: #218838;
+        background-color: rgb(131, 33, 33);
     }
 
     .vehiculos-grid {

@@ -20,8 +20,8 @@ body {
 
 .logo-img {
     margin-right: 10px;
-    width: auto;  /* Puedes aumentar este valor para hacer el logo aún más grande */
-    height: 50px;  /* Mantiene la proporción de la imagen */
+    width: auto;  
+    height: 10px; 
 }
 
 
