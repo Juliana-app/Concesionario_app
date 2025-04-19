@@ -1,12 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div style="max-width: 600px; margin: auto; padding: 2rem; border: 1px solid #ccc; border-radius: 8px;">
-    <h2 style="text-align: center;">Crear Vehiculo</h2>
+<div style="max-width: 600px; margin: 50px auto; padding: 3rem; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <h2 style="text-align: center; color: #333; font-family: 'Arial', sans-serif; font-size: 2rem; margin-bottom: 1.5rem;">Crear Vehículo</h2>
+    
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn-crear">Crear Vehiculo</button>
+        <div style="margin-bottom: 1.5rem;">
+            {{ form.as_p }}
+        </div>
+
+        <button type="submit" class="btn-crear" style="display: block; width: 100%; padding: 12px 0; background-color: #2196f3; color: white; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; transition: background-color 0.3s, transform 0.2s;">
+            Crear Vehículo
+        </button>
     </form>
 </div>
+
+<!-- Estilos adicionales para el botón -->
+<style>
+    .btn-crear:hover {
+        background-color: #1976d2;
+        transform: scale(1.05);
+    }
+</style>
 {% endblock %}

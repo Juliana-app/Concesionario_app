@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Lato", sans-serif;
     margin: 0;
     background-color: #f5f5f5;
 }
@@ -11,6 +11,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: "Merriweather", serif;
+    font-weight: 800;
+    font-size: 15px;
 }
 
 .logo {
@@ -21,7 +24,7 @@ body {
 .logo-img {
     margin-right: 10px;
     width: auto;  
-    height: 10px; 
+    height: 30px; 
 }
 
 
@@ -96,3 +99,4 @@ body {
     text-decoration: none;
     border-radius: 5px;
 }
+

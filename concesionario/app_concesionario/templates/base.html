@@ -6,6 +6,10 @@
     <meta charset="UTF-8">
     <title>TuConcesionario</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -15,9 +19,8 @@
             <span>TuConcesionario</span>
         </div>
         <div class="empresa-link">
-            <a href="{% url 'vista-empresas'%}">Detalles empresa</a>
-            <a href="{% url 'vista-vehiculos'%}" style="color: white;">Volver al inicio</a>
-            <i class="fas fa-user"></i>
+            <a href="{% url 'vista-empresas'%}">Detalle empresas</a>
+            <a href="{% url 'vista-vehiculos'%}" style="color: white;">Detalle vehículos</a>
         </div>
     </header>
 

@@ -5,6 +5,8 @@ COLOR = (
     ('Azul', 'Azul'),
     ('Rojo', 'Rojo'),
     ('Negro', 'Negro'),
+    ('Gris', 'Gris'),
+    ('Naranja', 'Naranja'),
 )
 
 class Empresa(models.Model):

@@ -9,7 +9,11 @@ from app_concesionario.models import Vehiculo
 from app_concesionario.api.serializers import EmpresaSerializer
 from app_concesionario.api.serializers import VehiculoSerializer
 
+#--------------------------------------------------------------------------------------------
 
+# VISTAS PARA PROBAR LA API Y VERIFICAR QUE FUNCIONAN LOS MÉTODOS
+
+# Vista para la API de Vehiculo y Empresa
 class EmpresaAV(APIView):
     # Obtener todas las empresas
     def get(self, request, format=None):
@@ -96,15 +100,11 @@ class VehiculoDetailAV(APIView):
         vehiculo.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+#--------------------------------------------------------------------------------------
 
-def empresa_menu(request, id):
-    empresa = get_object_or_404(Empresa, pk=id)
-    form = EmpresaForm(instance=empresa)
-    return render(request, 'menubar/empresaMenu.html', {
-        'empresa': empresa,
-        'form': form
-    })
+# Vista para la página de vehículos
 
+# Vista para el menú de vehículos
 def vehiculo_menu(request, id):
     vehiculo = get_object_or_404(Vehiculo, pk=id)
     form = VehiculoForm(instance=vehiculo)
@@ -124,6 +124,7 @@ def crear_vehiculo(request):
         form = VehiculoForm()
     return render(request, 'vehiculos/formulario_vehiculo.html', {'form': form})
 
+# Vista para editar un vehículo
 def actualizar_vehiculo(request, vehiculo_id):
     vehiculo = get_object_or_404(Vehiculo, pk=vehiculo_id)
     if request.method == 'POST':
@@ -143,14 +144,21 @@ def eliminar_vehiculo(request, vehiculo_id):
         return redirect('vista-vehiculos')  # Redirige a la lista de vehículos
     return render(request, 'vehiculos.html', {'vehiculo': vehiculo})
 
+# Vista para listar vehículos
 def listar_vehiculos(request):
     vehiculos = Vehiculo.objects.all()
     return render(request, 'vehiculos/listado.html', {'vehiculos': vehiculos})
 
+#---------------------------------------------------------------------------------------
+
+# Vista para la página de empresas
+
+# Vista para listar empresas
 def listar_empresas(request):
     empresas = Empresa.objects.all()
     return render(request, 'empresas/listado.html', {'empresas': empresas})
 
+#Vista para editar empresas
 def actualizar_empresa(request, empresa_id):
     empresa = get_object_or_404(Empresa, pk=empresa_id)
     if request.method == 'POST':
@@ -162,12 +170,15 @@ def actualizar_empresa(request, empresa_id):
         form = EmpresaForm(instance=empresa)
     return render(request, 'menubar/empresaMenu.html', {'empresa': empresa, 'form': form})
 
+
+# Vista para eliminar empresas
 def eliminar_empresa(request, empresa_id):
     empresa = get_object_or_404(Empresa, pk=empresa_id)
     if request.method == 'POST':
         empresa.delete()
     return render(request, 'empresas.html', {'empresa': empresa})
 
+#Vista para crear empresas
 def crear_empresa(request):
     if request.method == 'POST':
         form = EmpresaForm(request.POST)
@@ -177,3 +188,14 @@ def crear_empresa(request):
     else:
         form = EmpresaForm()
     return render(request, 'empresas/formulario_empresa.html', {'form': form})
+
+#Vista para el menú de empresas
+def empresa_menu(request, id):
+    empresa = get_object_or_404(Empresa, pk=id)
+    form = EmpresaForm(instance=empresa)
+    return render(request, 'menubar/empresaMenu.html', {
+        'empresa': empresa,
+        'form': form
+    })
+
+#----------------------------------------------------------------------------------------
